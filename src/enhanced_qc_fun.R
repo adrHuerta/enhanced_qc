@@ -76,7 +76,7 @@ decimal_plots_eqc <- function(xts_ts, title_plot = "title")
                                  label.position = "top",
                                  nrow = 1,
                                )
-                               )+ 
+    )+ 
     ggplot2::ylab("frequency (days/year)") + 
     ggplot2::xlab(" ") + 
     ggplot2::ggtitle(title_plot) +
@@ -148,7 +148,7 @@ wd_fraction <- function(xts_obj)
                             labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))) %>%
     transform(frac_wd = count_wd/count)
   
-  if(all(is.nan(out_df$frac_wd))){
+  if(is.nan(sum(out_df$frac_wd)) | is.na(sum(out_df$frac_wd))){ #all(is.nan(out_df$frac_wd))
     
     out_df$bin_test <- NA
     out_df$bin_test <- factor(out_df$bin_test, levels = c("Rejected Ho", "No Rejected Ho")) 
@@ -162,7 +162,7 @@ wd_fraction <- function(xts_obj)
                             conf.level = 0.95)
       
       out_df$bin_test[i] <- ifelse(!((test_bt$conf.int[1] < sum(out_df$count_wd)/sum(out_df$count)) & 
-                                     (sum(out_df$count_wd)/sum(out_df$count) < test_bt$conf.int[2])), "Rejected Ho", "No Rejected Ho")
+                                       (sum(out_df$count_wd)/sum(out_df$count) < test_bt$conf.int[2])), "Rejected Ho", "No Rejected Ho")
       
     }
     
@@ -235,7 +235,7 @@ wd_pyear_plot_eqc <- function(xts_ts, title_plot = "title"){
     ggplot2::geom_point(data = data_ts,
                         ggplot2::aes(x = year, y = week, colour = bin_test), size = 2) + 
     ggplot2::geom_rug(data = data_ts[data_ts$bin_test == "Rejected Ho", ],
-                      ggplot2::aes(x = year), colour = "red", linewidth = q, alpha = 1, shape = 1) +
+                      ggplot2::aes(x = year), colour = "red", linewidth = 1, alpha = 1, shape = 1) +
     ggplot2::scale_colour_manual("Binomial Test:", values = c("red", "gray20"), labels = c("WD fraction outside the 95% CI", "WD fraction inside the 95% CI"), drop = FALSE) + 
     ggplot2::ylab("WD fraction (PRCP >= 1 mm)") + 
     ggplot2::xlab(" ") + 
