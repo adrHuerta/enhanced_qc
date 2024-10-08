@@ -202,7 +202,7 @@ wd_plot_eqc <- function(xts_ts, title_plot = "title"){
     ggplot2::ylab("WD fraction (PRCP >= 1 mm)") +
     ggplot2::xlab(" ") + 
     ggplot2::ggtitle(title_plot) +
-    ggplot2::ylim(0, sum(get_pweek_from_xts(xts_ts)$count_wd)/sum(get_pweek_from_xts(xts_ts)$count) + 0.05) +
+    ggplot2::ylim(0, sum(get_pweek_from_xts(xts_ts)$count_wd)/sum(get_pweek_from_xts(xts_ts)$count) + 0.1) +
     ggplot2::theme_bw() + 
     ggplot2::theme(axis.text.y = ggplot2::element_text(angle = 90, hjust = 0.5), 
                    axis.title.x = ggplot2::element_blank(),
