@@ -130,6 +130,10 @@ missing_plot_eqc <- function(xts_ts, title_plot = "title"){
 
 wd_fraction <- function(xts_obj)
 {
+  
+  original_locale <- Sys.getlocale("LC_TIME")  # Save the current locale
+  Sys.setlocale("LC_TIME", "C")                # Set locale to English
+  
   out_df <- data.frame(value = as.numeric(xts_obj), week = weekdays(time(xts_obj)))
   out_df_wd <- out_df[out_df$value >= 0.1, ]
   
@@ -170,6 +174,7 @@ wd_fraction <- function(xts_obj)
     
   }
   
+  Sys.setlocale("LC_TIME", original_locale)    # Reset to the original locale
   out_df
 }
 
